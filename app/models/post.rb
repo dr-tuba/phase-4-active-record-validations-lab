@@ -5,9 +5,10 @@ class Post < ApplicationRecord
     validates :category, inclusion: { in: %w(Fiction Non-Fiction) }
     validate :title_is_clickbait
 
+    TITLES = [/Won't Believe/i, /Secret/i, /Top \d/i, /Guess/i]
+
     def title_is_clickbait
-        titles = [/Won't Believe/i, /Secret/i, /Top \d/i, /Guess/i]
-        unless titles.any? { |i| i.match(title) }
+        unless TITLES.any? { |i| i.match(title) }
             errors.add(:title, "Must be click bait title")
         end
     end
